@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container mt-2">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="h3">Todo Django App</div>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'tasks:create' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" class="form-control" name="title">
+                        <button type="submit" class="btn btn-primary mt-2">Nueva Tarea</button>
+                    </form>
+                </div>
+        
+            </div>
+
+            <hr>
+
+            <div class="col">
+                <div class="h3">My Tasks</div>
+                <div class="">
+                    {% if object_list %}
+                        {% for object in object_list %}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="h5">
+                                            {{ object.title }}
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <a href="{% url 'tasks:delete' object.pk %}" class="btn btn-primary">Done!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                   
+                    {% else %}
+                        <div class="col align-self-center">
+                            <div class="h4">You don't have any task!</div>
+                        </div> 
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="{% static 'js/main.js'%}"></script>
+</html>
